@@ -18,7 +18,9 @@ const run = async () => {
   try {
     await client.connect();
     console.log("connected");
-    const productCollection = client.db("redionElectronics").collection("products");
+    const productCollection = client
+      .db("redionElectronics")
+      .collection("products");
     const itemsCollection = client.db("redionElectronics").collection("items");
 
     // GET products
@@ -68,19 +70,25 @@ const run = async () => {
       const result = await productCollection.deleteOne(query);
       res.send(result);
     });
-    
+
     // items collection API
-  /*   app.get('/items', async(req, res)=>{
+    app.get("/items", async (req, res) => {
       const decodedEmail = req.decoded.email;
       const email = req.query.email;
-      if(email === decodedEmail){
-        const query = {email: email}
-        const cursor = itemsCollection.find(query)
+      if (email === decodedEmail) {
+        const query = { email: email };
+        const cursor = itemsCollection.find(query);
         const items = await cursor.toArray();
-        res.send(items)
+        res.send(items);
       }
-    }) */
-    
+    });
+
+    app.post("/items", async (req, res) => {
+      const item = req.body;
+      const result = await itemsCollection.insertOne(item);
+      res.send(result);
+    });
+
     // comment
   } finally {
   }
