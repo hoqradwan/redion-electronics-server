@@ -18,9 +18,9 @@ const run = async () => {
   try {
     await client.connect();
     console.log("connected");
-    const productCollection = client
-      .db("redionElectronics")
-      .collection("products");
+    const productCollection = client.db("redionElectronics").collection("products");
+    const itemsCollection = client.db("redionElectronics").collection("items");
+
     // GET products
     app.get("/products", async (req, res) => {
       const query = {};
@@ -43,19 +43,23 @@ const run = async () => {
       res.send(result);
     });
     // PUT
-    app.put('/products/:id' , async (req, res) => {
+    app.put("/products/:id", async (req, res) => {
       const id = req.params.id;
       const updatedProduct = req.body;
-      const query = {_id: ObjectId(id)}
-      const options = {upsert : true}
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
       const updatedDoc = {
-        $set:{
-             quantity : updatedProduct.quantity
-        }
-      }
-      const result = await productCollection.updateOne(query, updatedDoc, options);
-      res.send(result)
-    })
+        $set: {
+          quantity: updatedProduct.quantity,
+        },
+      };
+      const result = await productCollection.updateOne(
+        query,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
     // DELETE
     app.delete("/products/:id", async (req, res) => {
       const id = req.params.id;
@@ -63,6 +67,18 @@ const run = async () => {
       const result = await productCollection.deleteOne(query);
       res.send(result);
     });
+    
+    // items collection API
+    app.get('/items', async(req, res)=>{
+      const decodedEmail = req.decoded.email;
+      const email = req.query.email;
+      if(email === decodedEmail){
+        const query = {email: email}
+        const cursor = itemsCollection.find(query)
+        const items = await cursor.toArray();
+        res.send(items)
+      }
+    })
   } finally {
   }
 
