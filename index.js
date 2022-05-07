@@ -74,16 +74,17 @@ const run = async () => {
 
     // items collection API
     app.get("/items", async (req, res) => {
-      const decodedEmail = req.decoded.email;
-      const email = req.query.email;
-      if (email === decodedEmail) {
-        const query = {email: email};
+      // const decodedEmail = req.decoded.email;
+      // const email = req.query.email;
+      // if (email === decodedEmail) {}
+        // const query = {email: email};
+        const query = {};
         const cursor = itemsCollection.find(query);
         const items = await cursor.toArray();
         res.send(items);
       }
       // const query = { email: email };
-    });
+    );
 
     // POST items
     app.post("/items", async (req, res) => {
