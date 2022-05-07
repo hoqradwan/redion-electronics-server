@@ -52,13 +52,9 @@ const run = async () => {
     });
     // POST
     app.post("/products", async (req, res) => {
-      const decodedEmail = req.decoded.email;
-      const email = req.query.email;
-      if(email === decodedEmail){
         const newProduct = req.body;
         const result = await productCollection.insertOne(newProduct);
         res.send(result);
-      }
     });
     // PUT
     app.put("/products/:id", async (req, res) => {
