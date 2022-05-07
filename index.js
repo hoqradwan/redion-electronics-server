@@ -73,7 +73,7 @@ const run = async () => {
     });
 
     // items collection API
- /*    app.get("/items", async (req, res) => {
+    app.get("/items", async (req, res) => {
       const decodedEmail = req.decoded.email;
       const email = req.query.email;
       if (email === decodedEmail) {
@@ -88,7 +88,7 @@ const run = async () => {
       const item = req.body;
       const result = await itemsCollection.insertOne(item);
       res.send(result);
-    }); */
+    });
   } finally {
   }
 };
