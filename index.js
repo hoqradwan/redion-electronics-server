@@ -38,17 +38,7 @@ const run = async () => {
       const product = await productCollection.findOne(query);
       res.send(product);
     });
-    /*   app.get("/products/:id", async (req, res) => {
-      const decodedEmail = req.decoded.email;
-      const email = req.query.email;
-      if (email === decodedEmail) {
-        const id = req.params.id;
-        console.log(id);
-        const query = { _id: ObjectId(id) };
-        const product = await productCollection.findOne(query);
-        res.send(product);
-      }
-    }); */
+
     // POST
     app.post("/products", async (req, res) => {
       const newProduct = req.body;
@@ -83,7 +73,7 @@ const run = async () => {
     });
 
     // items collection API
-    app.get("/items", async (req, res) => {
+ /*    app.get("/items", async (req, res) => {
       const decodedEmail = req.decoded.email;
       const email = req.query.email;
       if (email === decodedEmail) {
@@ -98,7 +88,7 @@ const run = async () => {
       const item = req.body;
       const result = await itemsCollection.insertOne(item);
       res.send(result);
-    });
+    }); */
   } finally {
   }
 };
