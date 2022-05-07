@@ -31,7 +31,6 @@ const run = async () => {
       res.send(products);
     });
 
-
     app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
       console.log(id);
@@ -75,15 +74,15 @@ const run = async () => {
 
     // items collection API
     app.get("/items", async (req, res) => {
-      // const decodedEmail = req.decoded.email;
-      // const email = req.query.email;
-     /*  if (email === decodedEmail) {
-      } */
+      const decodedEmail = req.decoded.email;
+      const email = req.query.email;
+      if (email === decodedEmail) {
+        const query = {email: email};
+        const cursor = itemsCollection.find(query);
+        const items = await cursor.toArray();
+        res.send(items);
+      }
       // const query = { email: email };
-      const query = {};
-      const cursor = itemsCollection.find(query);
-      const items = await cursor.toArray();
-      res.send(items);
     });
 
     // POST items
@@ -93,8 +92,8 @@ const run = async () => {
       res.send(result);
     });
 
-     // DELETE
-     app.delete("/items/:id", async (req, res) => {
+    // DELETE
+    app.delete("/items/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await itemsCollection.deleteOne(query);
