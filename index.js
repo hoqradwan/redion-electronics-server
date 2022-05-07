@@ -31,7 +31,7 @@ const run = async () => {
       res.send(products);
     });
 
-  /*   app.get("/products/:id", async (req, res) => {
+    /*   app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
       console.log(id);
       const query = { _id: ObjectId(id) };
@@ -41,20 +41,19 @@ const run = async () => {
     app.get("/products/:id", async (req, res) => {
       const decodedEmail = req.decoded.email;
       const email = req.query.email;
-      if(email === decodedEmail){
+      if (email === decodedEmail) {
         const id = req.params.id;
         console.log(id);
         const query = { _id: ObjectId(id) };
         const product = await productCollection.findOne(query);
         res.send(product);
       }
-     
     });
     // POST
     app.post("/products", async (req, res) => {
-        const newProduct = req.body;
-        const result = await productCollection.insertOne(newProduct);
-        res.send(result);
+      const newProduct = req.body;
+      const result = await productCollection.insertOne(newProduct);
+      res.send(result);
     });
     // PUT
     app.put("/products/:id", async (req, res) => {
@@ -84,7 +83,7 @@ const run = async () => {
     });
 
     // items collection API
-   /*  app.get("/items", async (req, res) => {
+    app.get("/items", async (req, res) => {
       const decodedEmail = req.decoded.email;
       const email = req.query.email;
       if (email === decodedEmail) {
@@ -93,20 +92,16 @@ const run = async () => {
         const items = await cursor.toArray();
         res.send(items);
       }
-    }); */
+    });
 
-    
- /*    app.post("/items", async (req, res) => {
+       app.post("/items", async (req, res) => {
       const item = req.body;
       const result = await itemsCollection.insertOne(item);
       res.send(result);
-    }); */
+    });
 
-    // comment
   } finally {
   }
-
-  // perform actions on the collection object
 };
 run();
 
