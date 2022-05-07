@@ -31,14 +31,14 @@ const run = async () => {
       res.send(products);
     });
 
-    /*   app.get("/products/:id", async (req, res) => {
+    app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
       console.log(id);
       const query = { _id: ObjectId(id) };
       const product = await productCollection.findOne(query);
       res.send(product);
-    }); */
-    app.get("/products/:id", async (req, res) => {
+    });
+    /*   app.get("/products/:id", async (req, res) => {
       const decodedEmail = req.decoded.email;
       const email = req.query.email;
       if (email === decodedEmail) {
@@ -48,7 +48,7 @@ const run = async () => {
         const product = await productCollection.findOne(query);
         res.send(product);
       }
-    });
+    }); */
     // POST
     app.post("/products", async (req, res) => {
       const newProduct = req.body;
@@ -94,17 +94,15 @@ const run = async () => {
       }
     });
 
-       app.post("/items", async (req, res) => {
+    app.post("/items", async (req, res) => {
       const item = req.body;
       const result = await itemsCollection.insertOne(item);
       res.send(result);
     });
-
   } finally {
   }
 };
 run();
-
 
 app.get("/", (req, res) => {
   res.send("Hey bro, How are you!!");
