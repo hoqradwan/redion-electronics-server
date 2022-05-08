@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 require("dotenv").config();
@@ -22,7 +23,14 @@ const run = async () => {
       .db("redionElectronics")
       .collection("products");
     const itemsCollection = client.db("redionElectronics").collection("items");
-
+    // AUTH
+    app.post("/login", async (req, res) => {
+      const user = req.body;
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "1d",
+      });
+      res.send({ accessToken });
+    });
     // GET products
     app.get("/products", async (req, res) => {
       const query = {};
@@ -73,10 +81,12 @@ const run = async () => {
     });
 
     // items collection API
-    app.get("/items", async (req, res) => {
-      // const decodedEmail = req.decoded.email;
-      // const email = req.query.email;
-      // if (email === decodedEmail) {}
+    app.get(
+      "/items",
+      async (req, res) => {
+        // const decodedEmail = req.decoded.email;
+        // const email = req.query.email;
+        // if (email === decodedEmail) {}
         // const query = {email: email};
         const query = {};
         const cursor = itemsCollection.find(query);
@@ -93,7 +103,6 @@ const run = async () => {
       res.send(result);
     });
 
-
     // DELETE
     app.delete("/items/:id", async (req, res) => {
       const id = req.params.id;
@@ -104,7 +113,6 @@ const run = async () => {
   } finally {
   }
 };
-
 
 run();
 
