@@ -91,7 +91,8 @@ const run = async () => {
 
     // items collection API
     app.get("/items", async (req, res) => {
-      const query = {};
+      const email = req.query.email;
+      const query = { email: email };
       const cursor = itemsCollection.find(query);
       const items = await cursor.toArray();
       res.send(items);
@@ -116,7 +117,6 @@ const run = async () => {
 };
 
 run();
-
 
 app.get("/", (req, res) => {
   res.send("Hey bro, How are you!!");
