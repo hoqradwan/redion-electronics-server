@@ -12,14 +12,14 @@ app.use(express.json());
 function verifyJWT(req, res, next) {
   const authHeader = req.headers.authorization;
   console.log(authHeader);
-  if (!authHeader) {
+ /*  if (!authHeader) {
     return res.status(401).send({ message: "unauthorized access" });
-  }
+  } */
   const token = authHeader.split(" ")[1];
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-    if (err) {
+   /*  if (err) {
       return res.status(403).send({ message: "Forbidden access" });
-    }
+    } */
     console.log("decoded", decoded);
     req.decoded = decoded;
     next();
