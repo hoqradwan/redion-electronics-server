@@ -53,7 +53,7 @@ const run = async () => {
       const options = { upsert: true };
       const updatedDoc = {
         $set: {
-          quantity: parseInt(updatedProduct.quantity),
+          quantity: updatedProduct.quantity,
         },
       };
       const result = await productCollection.updateOne(
@@ -93,7 +93,7 @@ const run = async () => {
       res.send(result);
     });
 
-    
+
     // DELETE
     app.delete("/items/:id", async (req, res) => {
       const id = req.params.id;
