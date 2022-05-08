@@ -98,7 +98,7 @@ const run = async () => {
     });
 
     // items collection API
-    app.get("/items", verifyJWT, async (req, res) => {
+    app.get("/items", async (req, res) => {
       const query = {};
       const cursor = itemsCollection.find(query);
       const items = await cursor.toArray();
