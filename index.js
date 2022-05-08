@@ -53,7 +53,7 @@ const run = async () => {
       const options = { upsert: true };
       const updatedDoc = {
         $set: {
-          quantity: updatedProduct.quantity,
+          quantity: parseInt(updatedProduct.quantity),
         },
       };
       const result = await productCollection.updateOne(
@@ -73,7 +73,7 @@ const run = async () => {
     });
 
     // items collection API
-    app.get("/items", async (req, res) => {
+    app.get("/items", verifyJWT, async (req, res) => {
       // const decodedEmail = req.decoded.email;
       // const email = req.query.email;
       // if (email === decodedEmail) {}
