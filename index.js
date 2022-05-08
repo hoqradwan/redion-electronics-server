@@ -11,16 +11,8 @@ app.use(express.json());
 
 function verifyJWT(req, res, next) {
   const authHeader = req.headers.authorization;
-  console.log(authHeader);
-  /*  if (!authHeader) {
-    return res.status(401).send({ message: "unauthorized access" });
-  } */
   const token = authHeader.split(" ")[1];
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-    /*  if (err) {
-      return res.status(403).send({ message: "Forbidden access" });
-    } */
-    console.log("decoded", decoded);
     req.decoded = decoded;
     next();
   });
@@ -64,13 +56,13 @@ const run = async () => {
       res.send(product);
     });
 
-    // POST
+    // POST add product
     app.post("/products", async (req, res) => {
       const newProduct = req.body;
       const result = await productCollection.insertOne(newProduct);
       res.send(result);
     });
-    // PUT
+    // PUT update product
     app.put("/products/:id", async (req, res) => {
       const id = req.params.id;
       const updatedProduct = req.body;
@@ -89,7 +81,7 @@ const run = async () => {
       res.send(result);
     });
 
-    // DELETE
+    // DELETE product
     app.delete("/products/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -112,7 +104,7 @@ const run = async () => {
       res.send(result);
     });
 
-    // DELETE
+    // DELETE item
     app.delete("/items/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
