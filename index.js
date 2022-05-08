@@ -12,12 +12,12 @@ app.use(express.json());
 function verifyJWT(req, res, next) {
   const authHeader = req.headers.authorization;
   console.log(authHeader);
- /*  if (!authHeader) {
+  /*  if (!authHeader) {
     return res.status(401).send({ message: "unauthorized access" });
   } */
   const token = authHeader.split(" ")[1];
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-   /*  if (err) {
+    /*  if (err) {
       return res.status(403).send({ message: "Forbidden access" });
     } */
     console.log("decoded", decoded);
@@ -78,7 +78,7 @@ const run = async () => {
       const options = { upsert: true };
       const updatedDoc = {
         $set: {
-          quantity: parseInt(updatedProduct.quantity),
+          quantity: updatedProduct.quantity,
         },
       };
       const result = await productCollection.updateOne(
@@ -98,24 +98,12 @@ const run = async () => {
     });
 
     // items collection API
-    app.get(
-      "/items",
-      verifyJWT,
-      async (req, res) => {
-        const decodedEmail = req.decoded.email;
-        const email = req.query.email;
-        if (email === decodedEmail) {
-          const query = { email: email };
-          const cursor = itemsCollection.find(query);
-          const items = await cursor.toArray();
-          res.send(items);
-        }
-        else{
-          res.status(403).send({message: 'forbidden access'})
-        }
-        // const query = {};
-      }
-    );
+    app.get("/items", verifyJWT, async (req, res) => {
+      const query = {};
+      const cursor = itemsCollection.find(query);
+      const items = await cursor.toArray();
+      res.send(items);
+    });
 
     // POST items
     app.post("/items", async (req, res) => {
